@@ -1,49 +1,54 @@
-import matplotlib.pyplot as plt
 import numpy as np
-import matplotlib.cm as cm
 import scipy.stats
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+from . import loader
+from . import processing
+from . import output
+
 cmap = cm.Greys_r
 
-import loader
-import processing
-import output
+def main():
+    condition1_files = [
+    ['LX-2/NT/01_nucleus.tif', 'LX-2/NT/01_LITAF.tif'],
+    ['LX-2/NT/02_nucleus.tif', 'LX-2/NT/02_LITAF.tif'],
+    ['LX-2/NT/03_nucleus.tif', 'LX-2/NT/03_LITAF.tif'],
+    ['LX-2/NT/04_nucleus.tif', 'LX-2/NT/04_LITAF.tif']]
+    
+    condition2_files = [
+    ['LX-2/2hLPS500/01_nucleus.tif', 'LX-2/2hLPS500/01_LITAF.tif'],
+    ['LX-2/2hLPS500/02_nucleus.tif', 'LX-2/2hLPS500/02_LITAF.tif'],
+    ['LX-2/2hLPS500/03_nucleus.tif', 'LX-2/2hLPS500/03_LITAF.tif'],
+    ['LX-2/2hLPS500/04_nucleus.tif', 'LX-2/2hLPS500/04_LITAF.tif']]
+    
+    condition1 = processing.get_molecule_distribution(condition1_files)
+    condition2 = processing.get_molecule_distribution(condition2_files)
+    
+    labels_1 = ['NT 01', 'NT 02', 'NT 03', 'NT 04']
+    labels_2 = ['LPS500 01', 'LPS500 02', 'LPS500 03', 'LPS500 04']
+    
+    nuclei_intensity_c1 = []
+    for i in condition1['slices_intensity']:
+    	nuclei_intensity_c1.append(i[0])
+    
+    nuclei_intensity_c2 = []
+    for i in condition2['slices_intensity']:
+    	nuclei_intensity_c2.append(i[0])
+    
+    extranuclei_intensity_c1 = []
+    for i in condition1['slices_intensity']:
+    	extranuclei_intensity_c1.append(i[2])
+    
+    extranuclei_intensity_c2 = []
+    for i in condition2['slices_intensity']:
+    	extranuclei_intensity_c2.append(i[2])
+    
+    nuclei_intensity = nuclei_intensity_c1 +  nuclei_intensity_c2
+    output.boxplot(nuclei_intensity, outfile='prova.png')
 
-condition1_files = [
-['LX-2/NT/01_nucleus.tif', 'LX-2/NT/01_LITAF.tif'],
-['LX-2/NT/02_nucleus.tif', 'LX-2/NT/02_LITAF.tif'],
-['LX-2/NT/03_nucleus.tif', 'LX-2/NT/03_LITAF.tif'],
-['LX-2/NT/04_nucleus.tif', 'LX-2/NT/04_LITAF.tif']]
-
-condition2_files = [
-['LX-2/2hLPS500/01_nucleus.tif', 'LX-2/2hLPS500/01_LITAF.tif'],
-['LX-2/2hLPS500/02_nucleus.tif', 'LX-2/2hLPS500/02_LITAF.tif'],
-['LX-2/2hLPS500/03_nucleus.tif', 'LX-2/2hLPS500/03_LITAF.tif'],
-['LX-2/2hLPS500/04_nucleus.tif', 'LX-2/2hLPS500/04_LITAF.tif']]
-
-condition1 = processing.get_molecule_distribution(condition1_files)
-condition2 = processing.get_molecule_distribution(condition2_files)
-
-labels_1 = ['NT 01', 'NT 02', 'NT 03', 'NT 04']
-labels_2 = ['LPS500 01', 'LPS500 02', 'LPS500 03', 'LPS500 04']
-
-nuclei_intensity_c1 = []
-for i in condition1['slices_intensity']:
-	nuclei_intensity_c1.append(i[0])
-
-nuclei_intensity_c2 = []
-for i in condition2['slices_intensity']:
-	nuclei_intensity_c2.append(i[0])
-
-extranuclei_intensity_c1 = []
-for i in condition1['slices_intensity']:
-	extranuclei_intensity_c1.append(i[2])
-
-extranuclei_intensity_c2 = []
-for i in condition2['slices_intensity']:
-	extranuclei_intensity_c2.append(i[2])
-
-nuclei_intensity = nuclei_intensity_c1 +  nuclei_intensity_c2
-output.boxplot(nuclei_intensity, outfile = 'prova.png')
+if __name__ == "__main__":
+    main()
 
 # plt.hist(merged_intensity[0], bins=255, color='r', alpha=0.5)
 # plt.hist(merged_intensity[1], bins=255, color='g', alpha=0.5)
