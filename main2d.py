@@ -43,7 +43,7 @@ for i in condition2['slices_intensity']:
 	extranuclei_intensity_c2.append(i[2])
 
 nuclei_intensity = nuclei_intensity_c1 +  nuclei_intensity_c2
-output.boxplot(nuclei_intensity)
+output.boxplot(nuclei_intensity, outfile = 'prova.png')
 
 # plt.hist(merged_intensity[0], bins=255, color='r', alpha=0.5)
 # plt.hist(merged_intensity[1], bins=255, color='g', alpha=0.5)
