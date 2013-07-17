@@ -10,34 +10,34 @@ import output
 
 
 def test1(conditions, out_folder, conditions_labels = None, mask_label = 'mask', molecule_label = 'molecule'):
-	data = processing.compare_molecule_distribution(conditions,
-		nucleus_index = 0, molecule_index = 1, nucleus_channel = 1, molecule_channel = 0,
-		nucleus_fill_holes = True, nucleus_otsu = True, molecule_fill_holes = False, molecule_otsu = False)
+    data = processing.compare_molecule_distribution(conditions,
+        nucleus_index = 0, molecule_index = 1, nucleus_channel = 1, molecule_channel = 0,
+        nucleus_fill_holes = True, nucleus_otsu = True, molecule_fill_holes = False, molecule_otsu = False)
 
 # INTER CONDITION - masks - histo + boxplot - merged slices
-	temp = output.select_arrays(data, merged = True, what = [0])
-	labels = conditions_labels
-	output.boxplot(temp, labels = labels, outfile = out_folder + '/' + 'mask' + '_merged_boxplot.png')
-	output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = None, outfile = out_folder + '/' + 'mask' + '_merged_histogram.png')
-	
+    temp = output.select_arrays(data, merged = True, what = [0])
+    labels = conditions_labels
+    output.boxplot(temp, labels = labels, outfile = out_folder + '/' + 'mask' + '_merged_boxplot.png')
+    output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = None, outfile = out_folder + '/' + 'mask' + '_merged_histogram.png')
+    
 
 # SINGLE CONDITION - mask vs all - histo + boxplot - single slices
-	for i in range(0,len(data)):
-		temp = output.select_arrays([data[i]], merged = False, what = [0,1])
-		labels = [ conditions_labels[i] + '_nuclei' , conditions_labels[i] + '_all']
-		output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = ['green', 'red']*(len(temp)/2), outfile = out_folder + '/' + conditions_labels[i] + '_histogram.png')
-		output.boxplot(temp, labels = labels, outfile = out_folder + '/' + conditions_labels[i] + '_boxplot.png')
+    for i in range(0,len(data)):
+        temp = output.select_arrays([data[i]], merged = False, what = [0,1])
+        labels = [ conditions_labels[i] + '_nuclei' , conditions_labels[i] + '_all']
+        output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = ['green', 'red']*(len(temp)/2), outfile = out_folder + '/' + conditions_labels[i] + '_histogram.png')
+        output.boxplot(temp, labels = labels, outfile = out_folder + '/' + conditions_labels[i] + '_boxplot.png')
 
 # SINGLE CONDITION - mask vs all - histo + boxplot - merged slices
-	for i in range(0,len(data)):
-		temp = output.select_arrays([data[i]], merged = True, what = [0,1])
-		labels = [ conditions_labels[i] + '_nuclei' , conditions_labels[i] + '_all']
-		output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = ['green', 'red']*(len(temp)/2), outfile = out_folder + '/' + conditions_labels[i] + '_merged_histogram.png')
-		output.boxplot(temp, labels = labels, outfile = out_folder + '/' + conditions_labels[i] + '_merged_boxplot.png')
+    for i in range(0,len(data)):
+        temp = output.select_arrays([data[i]], merged = True, what = [0,1])
+        labels = [ conditions_labels[i] + '_nuclei' , conditions_labels[i] + '_all']
+        output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = ['green', 'red']*(len(temp)/2), outfile = out_folder + '/' + conditions_labels[i] + '_merged_histogram.png')
+        output.boxplot(temp, labels = labels, outfile = out_folder + '/' + conditions_labels[i] + '_merged_boxplot.png')
 
 
-	# temp = output.select_images([condition1], name = 'slices_mask', what = [1])
-	return(data)
+    # temp = output.select_images([condition1], name = 'slices_mask', what = [1])
+    return(data)
 # 
 
 
@@ -108,25 +108,25 @@ condition5_label = [
 
 
 # merge intensity arrays for plotting, collecting the names consistently
-# temp = output.select_arrays([condition2, condition4], merged = False, what = [0])	
-# output.histogram(temp, log=False, labels = condition2_label + condition4_label, histtype='stepfilled', bins=128, color = ['red']*4 + ['green']*4)	
+# temp = output.select_arrays([condition2, condition4], merged = False, what = [0]) 
+# output.histogram(temp, log=False, labels = condition2_label + condition4_label, histtype='stepfilled', bins=128, color = ['red']*4 + ['green']*4) 
 
 # condition1_files = [
-# 	['../../data/Alisi/AC_HSC_CTRL/01_nucleus.tif','data/AC_HSC_CTRL/01_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/02_nucleus.tif','data/AC_HSC_CTRL/02_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/03_nucleus.tif','data/AC_HSC_CTRL/03_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/04_nucleus.tif','data/AC_HSC_CTRL/04_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/05_nucleus.tif','data/AC_HSC_CTRL/05_LITAF.tif'],
-# 	['data/AC_HSC_CTRL/06_nucleus.tif','data/AC_HSC_CTRL/06_LITAF.tif']]
+#   ['../../data/Alisi/AC_HSC_CTRL/01_nucleus.tif','data/AC_HSC_CTRL/01_LITAF.tif'],
+#   ['data/AC_HSC_CTRL/02_nucleus.tif','data/AC_HSC_CTRL/02_LITAF.tif'],
+#   ['data/AC_HSC_CTRL/03_nucleus.tif','data/AC_HSC_CTRL/03_LITAF.tif'],
+#   ['data/AC_HSC_CTRL/04_nucleus.tif','data/AC_HSC_CTRL/04_LITAF.tif'],
+#   ['data/AC_HSC_CTRL/05_nucleus.tif','data/AC_HSC_CTRL/05_LITAF.tif'],
+#   ['data/AC_HSC_CTRL/06_nucleus.tif','data/AC_HSC_CTRL/06_LITAF.tif']]
 
 # condition2_files = [
-# 	['data/NA_HSC_CTRL/01_nucleus.tif','data/NA_HSC_CTRL/01_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/02_nucleus.tif','data/NA_HSC_CTRL/02_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/03_nucleus.tif','data/NA_HSC_CTRL/03_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/04_nucleus.tif','data/NA_HSC_CTRL/04_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/05_nucleus.tif','data/NA_HSC_CTRL/05_LITAF.tif'],
-# 	['data/NA_HSC_CTRL/06_nucleus.tif','data/NA_HSC_CTRL/06_LITAF.tif']
-# 	]
+#   ['data/NA_HSC_CTRL/01_nucleus.tif','data/NA_HSC_CTRL/01_LITAF.tif'],
+#   ['data/NA_HSC_CTRL/02_nucleus.tif','data/NA_HSC_CTRL/02_LITAF.tif'],
+#   ['data/NA_HSC_CTRL/03_nucleus.tif','data/NA_HSC_CTRL/03_LITAF.tif'],
+#   ['data/NA_HSC_CTRL/04_nucleus.tif','data/NA_HSC_CTRL/04_LITAF.tif'],
+#   ['data/NA_HSC_CTRL/05_nucleus.tif','data/NA_HSC_CTRL/05_LITAF.tif'],
+#   ['data/NA_HSC_CTRL/06_nucleus.tif','data/NA_HSC_CTRL/06_LITAF.tif']
+#   ]
 
 # # export only nuclei images
 # import PIL.Image as im
@@ -136,9 +136,9 @@ condition5_label = [
 # labels = condition1_label + condition2_label + condition3_label + condition4_label + condition5_label
 
 # for i in range(0, len(mask)):
-# 	A = molecule[i].copy()
-# 	A[mask[i]==0]=0
-# 	I = im.fromarray(A)
-# 	I.save(labels[i]+'.tif', 'tiff')
+#   A = molecule[i].copy()
+#   A[mask[i]==0]=0
+#   I = im.fromarray(A)
+#   I.save(labels[i]+'.tif', 'tiff')
 
 
