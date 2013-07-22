@@ -14,12 +14,24 @@ def test1(conditions, out_folder, conditions_labels = None, mask_label = 'mask',
         nucleus_index = 0, molecule_index = 1, nucleus_channel = 1, molecule_channel = 0,
         nucleus_fill_holes = True, nucleus_otsu = True, molecule_fill_holes = False, molecule_otsu = False)
 
+# PAIRWISE INTER CONDITION - masks - histo + boxplot - single slices
+    for i in range(0,len(data)-1):
+        for j in range(j+1,len(data)):
+            temp = output.select_arrays([data[i], data[j]], merged = False, what = [0])
+            labels1 = conditions_labels[i]*len(data[i])
+            labels2 = conditions_labels[j]*len(data[j])
+            labels = labels1 + labels2
+            color1 = 'red' *len(data[i])
+            color2 = 'green' * len(data[j])
+            color = color1 + color2
+            output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = color, outfile = out_folder + '/' + conditions_labels[i] + '-' + conditions_labels[j] + '_histogram.png')
+            output.boxplot(temp, labels = labels, outfile = out_folder + '/' + conditions_labels[i]  + '-' + conditions_labels[j] + '_boxplot.png')
+
 # INTER CONDITION - masks - histo + boxplot - merged slices
     temp = output.select_arrays(data, merged = True, what = [0])
     labels = conditions_labels
     output.boxplot(temp, labels = labels, outfile = out_folder + '/' + 'mask' + '_merged_boxplot.png')
     output.histogram(temp, log=True, labels = labels, histtype='step', bins=128, color = None, outfile = out_folder + '/' + 'mask' + '_merged_histogram.png')
-    
 
 # SINGLE CONDITION - mask vs all - histo + boxplot - single slices
     for i in range(0,len(data)):
